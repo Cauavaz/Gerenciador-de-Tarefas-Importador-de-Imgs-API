@@ -1,13 +1,10 @@
 import React, { createContext, useContext, useState } from 'react';
 
-// Criar o contexto específico para o dashboard
 const DashboardContext = createContext();
 
-// Provider do contexto do dashboard
 export const DashboardProvider = ({ children, todos = [] }) => {
-  const [filtroSelecionado, setFiltroSelecionado] = useState('todos'); // 'todos', 'pendentes', 'progresso', 'concluidas'
+  const [filtroSelecionado, setFiltroSelecionado] = useState('todos'); 
 
-  // Função para formatar data
   const formatDate = (dateString) => {
     if (!dateString) return '';
     const date = new Date(dateString);
@@ -18,12 +15,10 @@ export const DashboardProvider = ({ children, todos = [] }) => {
     });
   };
 
-  // Filtrar tarefas por status
   const tarefasPendentes = todos.filter(todo => todo.category === 'Pendente' && !todo.isCompleted);
   const tarefasProgresso = todos.filter(todo => todo.category === 'Progresso' && !todo.isCompleted);
   const tarefasConcluidas = todos.filter(todo => todo.isCompleted);
 
-  // Função para filtrar tarefas com base no filtro selecionado
   const getTarefasFiltradas = () => {
     switch(filtroSelecionado) {
       case 'pendentes':
@@ -84,7 +79,6 @@ export const DashboardProvider = ({ children, todos = [] }) => {
     getTarefasFiltradas,
     getTarefasParaColunas,
     
-    // Funções utilitárias
     formatDate,
     
     // Funções de filtro
@@ -101,7 +95,6 @@ export const DashboardProvider = ({ children, todos = [] }) => {
   );
 };
 
-// Hook para usar o contexto do dashboard
 export const useDashboardContext = () => {
   const context = useContext(DashboardContext);
   if (!context) {
