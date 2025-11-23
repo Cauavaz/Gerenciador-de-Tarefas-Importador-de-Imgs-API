@@ -44,8 +44,8 @@ const Sidebar = ({ isMenuOpen, setIsMenuOpen, activeView, setActiveView }) => {
               className={activeView === 'configuracoes' ? 'active' : ''}
               title={isMenuOpen ? '' : 'Configurações'}
             >
-              <span className="nav-icon"><i class="fas fa-cogs"></i></span>
-              {isMenuOpen && <span className="nav-text">Configurações</span>}
+              <span className="nav-icon"><i class="fas fa-chart-line"></i></span>
+              {isMenuOpen && <span className="nav-text">Dashboard</span>}
             </a>
           </li>
         </ul>

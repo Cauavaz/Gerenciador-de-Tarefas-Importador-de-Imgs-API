@@ -1908,3 +1908,7 @@ select option:hover {
 #root > div > main > div > div > div.statistics-content > div.mt-8 > div > form > div > div.flex.items-center.justify-center.gap-2.max-w-md.mx-auto > button{
   border:solid 1px #e05063;
 }
+
+#root > div > main > div > div.flex.items-center.justify-center > button{
+  border:solid 1px #e05063;
+}
