@@ -253,6 +253,8 @@ const SearchImg = ({ images = [], loading = false, error = null, onSearch = () =
                       <div className="space-y-2">
                         <Upload className="mx-auto text-gray-400" size={32} />
                         <p className="text-sm text-gray-700 font-medium">Clique ou arraste uma imagem</p>
+                        <p className="text-xs text-gray-500">Imagens até 100KB</p>
+
                       </div>
                     )}
                   </label>
