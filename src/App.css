@@ -1677,7 +1677,7 @@ select option:hover {
 /* ===== KANBAN BOARD ===== */
 .kanban-board {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(23%, 0fr));
+  grid-template-columns: repeat(auto-fit, minmax(23%, 1fr));
   gap: 1.5rem;
   height: 60vh;
     padding: 3rem 0rem 0rem 0rem;
@@ -1874,11 +1874,17 @@ select option:hover {
 
 .chart-container {
   background: white;
-  border-radius: 16px;
-  padding: 2rem;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-  max-width: 500px;
-  margin: 0 auto;
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    margin: 0 auto;
+    height: 55vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
 }
 
 .chart-title {
@@ -1893,4 +1899,12 @@ select option:hover {
   position: relative;
   height: 300px;
   width: 100%;
+}
+
+#root > div > main > div > div > div.statistics-content > div.mt-8 > div > form > div > div:nth-child(2) > button{
+  border:solid 1px #e05063;
+}
+
+#root > div > main > div > div > div.statistics-content > div.mt-8 > div > form > div > div.flex.items-center.justify-center.gap-2.max-w-md.mx-auto > button{
+  border:solid 1px #e05063;
 }
