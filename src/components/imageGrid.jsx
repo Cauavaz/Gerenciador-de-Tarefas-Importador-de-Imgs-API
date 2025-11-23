@@ -1,4 +1,5 @@
 import ImageCard from "./views/Components/imageCard";
+import { Loader2 } from 'lucide-react';
 
 const ImageGrid = ({images, loading, onLoadMore = () => {}, onDeleteImage = () => {}}) => {
     if(loading && (!images || images.length === 0)){
@@ -21,8 +22,11 @@ const ImageGrid = ({images, loading, onLoadMore = () => {}, onDeleteImage = () =
                 <button 
                     onClick={onLoadMore}
                     disabled={loading}
-                    className="load-more-btn"
+                    className={`load-more-btn flex items-center gap-2 ${
+                        loading ? 'opacity-75 cursor-not-allowed' : 'hover:bg-blue-700'
+                    }`}
                 >
+                    {loading && <Loader2 className="w-4 h-4 animate-spin" />}
                     {loading ? 'Carregando...' : 'Carregar Mais'}
                 </button>
             </div>

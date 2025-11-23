@@ -646,7 +646,7 @@ button:active {
 
 
 .todo.complete {
-  background: linear-gradient(135deg, #d4f4dd 0%, #e8f9f0 100%);
+  background: #ddf2e38f;
   border-left-color: #5CB85C;
   border-left-width: 6px;
   box-shadow: 0 2px 8px rgba(92, 184, 92, 0.2);

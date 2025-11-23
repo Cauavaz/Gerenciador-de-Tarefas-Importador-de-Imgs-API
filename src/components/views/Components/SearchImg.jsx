@@ -35,14 +35,14 @@ const SearchImg = ({ images = [], loading = false, error = null, onSearch = () =
           return;
         }
 
-        // Validar tamanho do arquivo (20MB = 20 * 1024 * 1024 bytes)
-        const maxSize = 20 * 1024 * 1024;
+        // Validar tamanho do arquivo (500KB = 500 * 1024 bytes)
+        const maxSize = 500 * 1024;
         const fileSize = file.size;
         
         if (fileSize > maxSize) {
           // Mostrar aviso se o arquivo for muito grande
-          const fileSizeMB = (fileSize / (1024 * 1024)).toFixed(2);
-          setWarningMessage(`Imagem muito grande (${fileSizeMB}MB). Limite permitido: 20MB`);
+          const fileSizeKB = (fileSize / 1024).toFixed(2);
+          setWarningMessage(`Imagem muito grande (${fileSizeKB}KB). Limite permitido: 500KB`);
           setShowSizeWarning(true);
           
           // Limpar o input
@@ -159,15 +159,14 @@ const SearchImg = ({ images = [], loading = false, error = null, onSearch = () =
               >
                 <i className="fa-solid fa-magnifying-glass"></i>
               </button>
-            </div>
-            <div className="flex justify-center">
               <button 
                 type="button"
                 onClick={() => setOpenAddModal(true)}
-                className="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 transition-colors flex items-center justify-center gap-2"
+                className="px-3 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 transition-colors flex items-center justify-center gap-2"
+                title="Adicionar imagem"
               >
-                <Upload size={20} />
-                Adicionar
+                <Upload size={16} />
+                <span className="hidden sm:inline">Adicionar</span>
               </button>
             </div>
           </div>
@@ -253,7 +252,7 @@ const SearchImg = ({ images = [], loading = false, error = null, onSearch = () =
                       <div className="space-y-2">
                         <Upload className="mx-auto text-gray-400" size={32} />
                         <p className="text-sm text-gray-700 font-medium">Clique ou arraste uma imagem</p>
-                        <p className="text-xs text-gray-500">Imagens até 100KB</p>
+                        <p className="text-xs text-gray-500">Imagens até 500KB</p>
 
                       </div>
                     )}

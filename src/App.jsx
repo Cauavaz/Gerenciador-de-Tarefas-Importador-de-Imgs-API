@@ -98,10 +98,50 @@ function App() {
     fetchImages(query);
   }, [query]);
 
-  // Salvar apenas imagens customizadas no localStorage
+  // Salvar apenas imagens customizadas no localStorage com verificação de quota
   useEffect(() => {
     const customImages = images.filter(img => typeof img.id === 'string' && img.id.startsWith('custom_'));
-    localStorage.setItem('customImages', JSON.stringify(customImages));
+    
+    try {
+      // Verificar tamanho estimado antes de salvar
+      const jsonString = JSON.stringify(customImages);
+      const estimatedSize = new Blob([jsonString]).size;
+      
+      // Limite seguro: aproximadamente 4MB (localStorage tem limite de ~5-10MB)
+      const maxSafeSize = 4 * 1024 * 1024; // 4MB
+      
+      if (estimatedSize > maxSafeSize) {
+        console.warn('Imagens customizadas muito grandes, removendo as mais antigas...');
+        
+        // Remover imagens mais antigas até ficar dentro do limite
+        const trimmedImages = [...customImages];
+        while (new Blob([JSON.stringify(trimmedImages)]).size > maxSafeSize && trimmedImages.length > 0) {
+          trimmedImages.shift(); // Remove a imagem mais antiga
+        }
+        
+        localStorage.setItem('customImages', JSON.stringify(trimmedImages));
+        
+        // Avisar o usuário
+        if (trimmedImages.length < customImages.length) {
+          alert(`Espaço insuficiente. ${customImages.length - trimmedImages.length} imagens antigas foram removidas para liberar espaço.`);
+        }
+      } else {
+        localStorage.setItem('customImages', JSON.stringify(customImages));
+      }
+    } catch (error) {
+      if (error.name === 'QuotaExceededError') {
+        console.error('Erro de quota do localStorage:', error);
+        
+        // Limpar completamente as imagens customizadas em caso de erro grave
+        localStorage.removeItem('customImages');
+        alert('Espaço de armazenamento esgotado. Todas as imagens customizadas foram removidas. Tente usar imagens menores.');
+        
+        // Recarregar a página sem as imagens customizadas
+        window.location.reload();
+      } else {
+        console.error('Erro ao salvar imagens customizadas:', error);
+      }
+    }
   }, [images]);
 
   const handleLoadMore = () => {
