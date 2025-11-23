@@ -96,10 +96,10 @@ const ImageCard = ({image, onDelete, images}) => {
             <X className="w-5 h-5 sm:w-6 sm:h-6 text-gray-700" />
           </button>
 
-          {/* Delete button */}
-          {image.id && typeof image.id === 'string' && image.id.startsWith('custom_') && (
+          {/* Delete button - Only for custom uploaded images */}
+          {currentImage.id && typeof currentImage.id === 'string' && currentImage.id.startsWith('custom_') && (
             <button
-              onClick={handleDelete}
+              onClick={() => onDelete(currentImage.id)}
               className="absolute top-2 left-2 sm:top-4 sm:left-4 z-10 w-8 h-8 sm:w-10 sm:h-10 bg-red-200 rounded-full flex items-center justify-center hover:bg-red-300 transition-colors shadow-lg"
               title="Deletar imagem"
             >
