@@ -226,7 +226,7 @@ const ModalContent = ({ children, ...props }) => (
       width: '900px',
       maxWidth: '90vw',
       height: '700px',
-      maxHeight: '90vh',
+      maxHeight: '64vh',
     }}
   >
     {children}

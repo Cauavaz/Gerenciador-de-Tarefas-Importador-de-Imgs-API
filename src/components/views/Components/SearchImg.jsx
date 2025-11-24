@@ -13,6 +13,7 @@ const SearchImg = ({ images = [], loading = false, error = null, onSearch = () =
   const [uploadMode, setUploadMode] = useState('url'); // 'url' ou 'file'
   const [showSizeWarning, setShowSizeWarning] = useState(false);
   const [warningMessage, setWarningMessage] = useState('');
+  const [showSuccessNotification, setShowSuccessNotification] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -63,6 +64,9 @@ const SearchImg = ({ images = [], loading = false, error = null, onSearch = () =
         reader.onload = (event) => {
           try {
             setImagePreview(event.target.result);
+            // Mostrar notificação de sucesso quando a imagem é anexada
+            setShowSuccessNotification(true);
+            setTimeout(() => setShowSuccessNotification(false), 3000);
           } catch (error) {
             setWarningMessage('Erro ao processar a imagem. Tente outro arquivo.');
             setShowSizeWarning(true);
@@ -136,6 +140,10 @@ const SearchImg = ({ images = [], loading = false, error = null, onSearch = () =
     setImageAlt('');
     setUploadMode('file');
     setOpenAddModal(false);
+    
+    // Mostrar notificação de sucesso
+    setShowSuccessNotification(true);
+    setTimeout(() => setShowSuccessNotification(false), 3000);
   };
 
   return (
@@ -333,6 +341,36 @@ const SearchImg = ({ images = [], loading = false, error = null, onSearch = () =
             <div>
               <div style={{ fontWeight: '600', marginBottom: '4px' }}>Arquivo muito grande!</div>
               <div style={{ fontSize: '13px', opacity: 0.9 }}>{warningMessage}</div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Notificação de Sucesso */}
+      {showSuccessNotification && (
+        <div
+          style={{
+            position: 'fixed',
+            top: '20px',
+            right: '20px',
+            backgroundColor: '#10b981',
+            color: 'white',
+            padding: '16px 20px',
+            borderRadius: '8px',
+            boxShadow: '0 4px 12px rgba(16, 185, 129, 0.3)',
+            zIndex: 9999,
+            maxWidth: '350px',
+            fontSize: '14px',
+            fontWeight: '500',
+            animation: 'slideInRight 0.3s ease-out',
+            borderLeft: '4px solid #059669',
+          }}
+        >
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+            <div style={{ fontSize: '20px', fontWeight: 'bold' }}>✅</div>
+            <div>
+              <div style={{ fontWeight: '600', marginBottom: '4px' }}>Imagem adicionada com sucesso!</div>
+              <div style={{ fontSize: '13px', opacity: 0.9 }}>A imagem foi importada e está disponível na galeria.</div>
             </div>
           </div>
         </div>
