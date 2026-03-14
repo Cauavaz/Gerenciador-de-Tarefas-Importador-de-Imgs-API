@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import Sidebar from "./components/layout/Sidebar"
 import Header from "./components/layout/Header"
+import PageTitle from "./components/layout/PageTitle"
 import TarefasView from "./components/views/TarefasView"
 import EstatisticasView from "./components/views/EstatisticasView"
 import ConfiguracoesView from "./components/views/ConfiguracoesView"
@@ -161,70 +162,43 @@ function App() {
   const [todos, setTodos] = useState(() => {
     const savedTodos = localStorage.getItem('todos');
     if (savedTodos) {
-      return JSON.parse(savedTodos);
+      // Ordenar por data de criação (mais recente primeiro)
+      const parsedTodos = JSON.parse(savedTodos);
+      return parsedTodos.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
     }
-    // Dados iniciais com quantidades solicitadas
+    // Dados iniciais já ordenados por data (mais recente primeiro)
     return [
-      // 10 tarefas pendentes
-      { id: 1, text: "Criar funcionalidade X no sistema", category: "Pendente", isCompleted: false, createdAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString() },
-      { id: 2, text: "Ir para a academia", category: "Pendente", isCompleted: false, createdAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString() },
+      // Tarefas mais recentes primeiro
       { id: 3, text: "Fazer compras no supermercado", category: "Pendente", isCompleted: false, createdAt: new Date().toISOString() },
-      { id: 4, text: "Pagar contas do mês", category: "Pendente", isCompleted: false, createdAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString() },
-      { id: 5, text: "Agendar consulta médica", category: "Pendente", isCompleted: false, createdAt: new Date(Date.now() - 4 * 24 * 60 * 60 * 1000).toISOString() },
-      { id: 6, text: "Organizar documentos", category: "Pendente", isCompleted: false, createdAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString() },
-      { id: 7, text: "Revisar relatório financeiro", category: "Pendente", isCompleted: false, createdAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString() },
-      { id: 8, text: "Preparar apresentação", category: "Pendente", isCompleted: false, createdAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString() },
       { id: 9, text: "Atualizar software", category: "Pendente", isCompleted: false, createdAt: new Date().toISOString() },
+      { id: 15, text: "Corrigir bugs críticos", category: "Progresso", isCompleted: false, createdAt: new Date().toISOString() },
+      { id: 17, text: "Design de interface", category: "Progresso", isCompleted: false, createdAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString() },
+      { id: 12, text: "Desenvolver nova API", category: "Progresso", isCompleted: false, createdAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString() },
+      { id: 6, text: "Organizar documentos", category: "Pendente", isCompleted: false, createdAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString() },
+      { id: 2, text: "Ir para a academia", category: "Pendente", isCompleted: false, createdAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString() },
+      { id: 14, text: "Otimizar performance", category: "Progresso", isCompleted: false, createdAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString() },
+      { id: 8, text: "Preparar apresentação", category: "Pendente", isCompleted: false, createdAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString() },
+      { id: 4, text: "Pagar contas do mês", category: "Pendente", isCompleted: false, createdAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString() },
+      { id: 11, text: "Estudar React", category: "Progresso", isCompleted: false, createdAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString() },
+      { id: 18, text: "Configurar ambiente", category: "Progresso", isCompleted: false, createdAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString() },
+      { id: 1, text: "Criar funcionalidade X no sistema", category: "Pendente", isCompleted: false, createdAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString() },
+      { id: 7, text: "Revisar relatório financeiro", category: "Pendente", isCompleted: false, createdAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString() },
+      { id: 13, text: "Testar integração", category: "Progresso", isCompleted: false, createdAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString() },
+      { id: 16, text: "Implementar autenticação", category: "Progresso", isCompleted: false, createdAt: new Date(Date.now() - 4 * 24 * 60 * 60 * 1000).toISOString() },
+      { id: 5, text: "Agendar consulta médica", category: "Pendente", isCompleted: false, createdAt: new Date(Date.now() - 4 * 24 * 60 * 60 * 1000).toISOString() },
       { id: 10, text: "Fazer backup dos dados", category: "Pendente", isCompleted: false, createdAt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString() },
       
-      // 20 tarefas em progresso
-      { id: 11, text: "Estudar React", category: "Progresso", isCompleted: false, createdAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString() },
-      { id: 12, text: "Desenvolver nova API", category: "Progresso", isCompleted: false, createdAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString() },
-      { id: 13, text: "Testar integração", category: "Progresso", isCompleted: false, createdAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString() },
-      { id: 14, text: "Otimizar performance", category: "Progresso", isCompleted: false, createdAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString() },
-      { id: 15, text: "Corrigir bugs críticos", category: "Progresso", isCompleted: false, createdAt: new Date().toISOString() },
-      { id: 16, text: "Implementar autenticação", category: "Progresso", isCompleted: false, createdAt: new Date(Date.now() - 4 * 24 * 60 * 60 * 1000).toISOString() },
-      { id: 17, text: "Design de interface", category: "Progresso", isCompleted: false, createdAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString() },
-      { id: 18, text: "Configurar ambiente", category: "Progresso", isCompleted: false, createdAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString() },
-      { id: 19, text: "Escrever documentação", category: "Progresso", isCompleted: false, createdAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString() },
-      { id: 20, text: "Analisar requisitos", category: "Progresso", isCompleted: false, createdAt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString() },
-      { id: 21, text: "Prototipar soluções", category: "Progresso", isCompleted: false, createdAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString() },
-      { id: 22, text: "Revisar código", category: "Progresso", isCompleted: false, createdAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString() },
-      { id: 23, text: "Configurar CI/CD", category: "Progresso", isCompleted: false, createdAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString() },
-      { id: 24, text: "Migrar base de dados", category: "Progresso", isCompleted: false, createdAt: new Date().toISOString() },
-      { id: 25, text: "Implementar cache", category: "Progresso", isCompleted: false, createdAt: new Date(Date.now() - 4 * 24 * 60 * 60 * 1000).toISOString() },
-      { id: 26, text: "Criar testes unitários", category: "Progresso", isCompleted: false, createdAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString() },
-      { id: 27, text: "Otimizar queries", category: "Progresso", isCompleted: false, createdAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString() },
-      { id: 28, text: "Implementar logging", category: "Progresso", isCompleted: false, createdAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString() },
-      { id: 29, text: "Configurar monitoramento", category: "Progresso", isCompleted: false, createdAt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString() },
-      { id: 30, text: "Refatorar módulos", category: "Progresso", isCompleted: false, createdAt: new Date().toISOString() },
-      
-      // 30 tarefas concluídas
-      { id: 31, text: "Reunião com equipe", category: "Concluídas", isCompleted: true, createdAt: new Date(Date.now() - 4 * 24 * 60 * 60 * 1000).toISOString() },
-      { id: 32, text: "Enviar relatório", category: "Concluídas", isCompleted: true, createdAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString() },
-      { id: 33, text: "Atualizar documentação", category: "Concluídas", isCompleted: true, createdAt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString() },
-      { id: 34, text: "Planejar sprint", category: "Concluídas", isCompleted: true, createdAt: new Date(Date.now() - 6 * 24 * 60 * 60 * 1000).toISOString() },
-      { id: 35, text: "Configurar ambiente", category: "Concluídas", isCompleted: true, createdAt: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString() },
-      { id: 36, text: "Instalar dependências", category: "Concluídas", isCompleted: true, createdAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString() },
-      { id: 37, text: "Criar repositório", category: "Concluídas", isCompleted: true, createdAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString() },
-      { id: 38, text: "Configurar Git", category: "Concluídas", isCompleted: true, createdAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString() },
-      { id: 39, text: "Setup inicial", category: "Concluídas", isCompleted: true, createdAt: new Date(Date.now() - 8 * 24 * 60 * 60 * 1000).toISOString() },
-      { id: 40, text: "Definir arquitetura", category: "Concluídas", isCompleted: true, createdAt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString() },
-      { id: 41, text: "Criar wireframes", category: "Concluídas", isCompleted: true, createdAt: new Date(Date.now() - 4 * 24 * 60 * 60 * 1000).toISOString() },
-      { id: 42, text: "Definir tecnologias", category: "Concluídas", isCompleted: true, createdAt: new Date(Date.now() - 6 * 24 * 60 * 60 * 1000).toISOString() },
-      { id: 43, text: "Configurar servidor", category: "Concluídas", isCompleted: true, createdAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString() },
-      { id: 44, text: "Criar banco de dados", category: "Concluídas", isCompleted: true, createdAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString() },
-      { id: 45, text: "Implementar CRUD básico", category: "Concluídas", isCompleted: true, createdAt: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString() },
-      { id: 46, text: "Criar componentes base", category: "Concluídas", isCompleted: true, createdAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString() },
-      { id: 47, text: "Configurar roteamento", category: "Concluídas", isCompleted: true, createdAt: new Date(Date.now() - 4 * 24 * 60 * 60 * 1000).toISOString() },
-      { id: 48, text: "Implementar estados", category: "Concluídas", isCompleted: true, createdAt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString() },
-      { id: 49, text: "Criar layout responsivo", category: "Concluídas", isCompleted: true, createdAt: new Date(Date.now() - 6 * 24 * 60 * 60 * 1000).toISOString() },
-      { id: 50, text: "Adicionar validações", category: "Concluídas", isCompleted: true, createdAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString() },
-      { id: 51, text: "Implementar filtros", category: "Concluídas", isCompleted: true, createdAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString() },
-      { id: 52, text: "Criar dashboard", category: "Concluídas", isCompleted: true, createdAt: new Date(Date.now() - 4 * 24 * 60 * 60 * 1000).toISOString() },
-      { id: 53, text: "Adicionar gráficos", category: "Concluídas", isCompleted: true, createdAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString() },
-      { id: 54, text: "Implementar exportação", category: "Concluídas", isCompleted: true, createdAt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString() },
-      { id: 55, text: "Criar relatórios", category: "Concluídas", isCompleted: true, createdAt: new Date(Date.now() - 6 * 24 * 60 * 60 * 1000).toISOString() },
+      // Tarefas concluídas mais antigas
+      { id: 21, text: "Finalizar projeto", category: "Concluídas", isCompleted: false, createdAt: new Date(Date.now() - 6 * 24 * 60 * 60 * 1000).toISOString() },
+      { id: 22, text: "Enviar relatório", category: "Concluídas", isCompleted: false, createdAt: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString() },
+      { id: 23, text: "Reunião com equipe", category: "Concluídas", isCompleted: false, createdAt: new Date(Date.now() - 8 * 24 * 60 * 60 * 1000).toISOString() },
+      { id: 24, text: "Apresentar resultados", category: "Concluídas", isCompleted: false, createdAt: new Date(Date.now() - 9 * 24 * 60 * 60 * 1000).toISOString() },
+      { id: 25, text: "Documentar código", category: "Concluídas", isCompleted: false, createdAt: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000).toISOString() },
+      { id: 26, text: "Testar sistema", category: "Concluídas", isCompleted: false, createdAt: new Date(Date.now() - 11 * 24 * 60 * 60 * 1000).toISOString() },
+      { id: 27, text: "Corrigir erros", category: "Concluídas", isCompleted: false, createdAt: new Date(Date.now() - 12 * 24 * 60 * 60 * 1000).toISOString() },
+      { id: 28, text: "Otimizar código", category: "Concluídas", isCompleted: false, createdAt: new Date(Date.now() - 13 * 24 * 60 * 60 * 1000).toISOString() },
+      { id: 29, text: "Atualizar dependências", category: "Concluídas", isCompleted: false, createdAt: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000).toISOString() },
+      { id: 30, text: "Limpar cache", category: "Concluídas", isCompleted: false, createdAt: new Date(Date.now() - 15 * 24 * 60 * 60 * 1000).toISOString() },
       { id: 56, text: "Configurar permissões", category: "Concluídas", isCompleted: true, createdAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString() },
       { id: 57, text: "Implementar busca", category: "Concluídas", isCompleted: true, createdAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString() },
       { id: 58, text: "Adicionar animações", category: "Concluídas", isCompleted: true, createdAt: new Date(Date.now() - 4 * 24 * 60 * 60 * 1000).toISOString() },
@@ -252,7 +226,14 @@ function App() {
       isCompleted: false,
       createdAt: new Date().toISOString()
     };
-    const newTodos = [...todos, newTodo];
+    // Adicionar no início (mais recente primeiro)
+    const newTodos = [newTodo, ...todos];
+    setTodos(newTodos);
+    localStorage.setItem('todos', JSON.stringify(newTodos));
+  };
+
+    const removeMultipleTodos = (ids) => {
+    const newTodos = todos.filter(todo => !ids.includes(todo.id));
     setTodos(newTodos);
     localStorage.setItem('todos', JSON.stringify(newTodos));
   };
@@ -290,41 +271,51 @@ function App() {
       
       <main className={`main-content ${isMenuOpen ? '' : 'minimized'}`}>
         <div className="app">
-          <Header title={viewTitles[activeView]} isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
+          <Header isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
 
           {/* ===== VIEWS ===== */}
           {activeView === 'tarefas' && (
-            <TarefasView 
-              todos={todos}
-              search={search}
-              setSearch={setSearch}
-              removeTodo={removeTodo}
-              completeTodos={completeTodos}
-              addTodo={addTodo}
-              updateTodo={updateTodo}
-            />
+            <>
+              <PageTitle title={viewTitles[activeView]} isMenuOpen={isMenuOpen} />
+              <TarefasView 
+                todos={todos}
+                search={search}
+                setSearch={setSearch}
+                removeTodo={removeTodo}
+              removeMultipleTodos={removeMultipleTodos}
+                completeTodos={completeTodos}
+                addTodo={addTodo}
+                updateTodo={updateTodo}
+              />
+            </>
           )}
           
           {activeView === 'estatisticas' && (
-            <EstatisticasView 
-              images={images}
-              loading={loading}
-              error={error}
-              query={query}
-              setQuery={setQuery}
-              onLoadMore={handleLoadMore}
-              loadingMore={loadingMore}
-              onAddImage={handleAddImage}
-              onDeleteImage={handleDeleteImage}
-              SearchImg={SearchImg}
-              ImageGrid={ImageGrid}
-            />
+            <>
+              <PageTitle title={viewTitles[activeView]} isMenuOpen={isMenuOpen} />
+              <EstatisticasView 
+                images={images}
+                loading={loading}
+                error={error}
+                query={query}
+                setQuery={setQuery}
+                onLoadMore={handleLoadMore}
+                loadingMore={loadingMore}
+                onAddImage={handleAddImage}
+                onDeleteImage={handleDeleteImage}
+                SearchImg={SearchImg}
+                ImageGrid={ImageGrid}
+              />
+            </>
           )}
           
           {activeView === 'configuracoes' && (
-            <DashboardProvider todos={todos}>
-              <ConfiguracoesView />
-            </DashboardProvider>
+            <>
+              <PageTitle title={viewTitles[activeView]} isMenuOpen={isMenuOpen} />
+              <DashboardProvider todos={todos}>
+                <ConfiguracoesView />
+              </DashboardProvider>
+            </>
           )}
         </div>
       </main>

@@ -329,6 +329,98 @@ body {
     padding: 5rem 4rem 0rem 4rem;
 }
 
+/* ===== SELECTION MODE STYLES ===== */
+.btn-select, .btn-bulk-delete, .btn-cancel-selection, .btn-add {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn-add {
+  background-color: #1A1A2E;
+  color: white;
+  font-size: 1.2rem;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-select {
+  background-color: #f0f0f0;
+  color: #333;
+}
+
+.btn-bulk-delete {
+  background-color: #dc3545;
+  color: white;
+}
+
+.btn-cancel-selection {
+  background-color: #6c757d;
+  color: white;
+}
+
+.todo.selection-mode {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  transition: background-color 0.3s;
+}
+
+.todo.selected {
+  background-color: #e9f5ff;
+  border-left-color: #007bff;
+}
+
+.checkbox-container {
+  padding-left: 10px;
+}
+
+.checkbox-container input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+/* ===== PAGE TITLE ===== */
+.page-title-container {
+  position: relative;
+  padding: 20px 0 10px 0;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #e9ecef;
+}
+
+.page-title-container.minimized {
+  padding: 15px 0 8px 0;
+  margin-bottom: 15px;
+}
+
+.page-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1A1A2E;
+  margin: 0;
+  text-align: left;
+  background: linear-gradient(135deg, #1A1A2E 0%, #667eea 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  font-family: 'Poppins', 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  border-radius: 8px;
+  letter-spacing: 0.5px;
+}
+
+.page-title-container.minimized .page-title {
+  font-size: 1.75rem;
+}
+
 /* ===== HEADER SECTION ===== */
 .app-header {
     position: fixed;

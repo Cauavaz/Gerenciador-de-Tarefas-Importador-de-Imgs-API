@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import Todo from "../Todo";
 import Search from "../Search";
-import { showSuccessAlert, showDeleteConfirm, showTaskModal } from "../../utils/sweetAlert";
+import { showSuccessAlert, showDeleteConfirm, showTaskModal, showBulkDeleteConfirm, showInfoAlert } from "../../utils/sweetAlert";
 
-const TarefasView = ({ todos, search, setSearch, removeTodo, completeTodos, addTodo, updateTodo }) => {
+const TarefasView = ({ todos, search, setSearch, removeTodo, completeTodos, addTodo, updateTodo, removeMultipleTodos }) => {
   const [editingTodo, setEditingTodo] = useState(null);
+  const [selectionMode, setSelectionMode] = useState(false);
+  const [selectedTodos, setSelectedTodos] = useState([]);
 
   const handleAddTodo = async () => {
     const result = await showTaskModal();
@@ -29,6 +31,29 @@ const TarefasView = ({ todos, search, setSearch, removeTodo, completeTodos, addT
     }
   };
 
+    const handleToggleSelect = (id) => {
+    setSelectedTodos(prevSelected => 
+      prevSelected.includes(id)
+        ? prevSelected.filter(todoId => todoId !== id)
+        : [...prevSelected, id]
+    );
+  };
+
+  const handleBulkDelete = async () => {
+    if (selectedTodos.length === 0) {
+      showInfoAlert("Nenhuma tarefa selecionada!");
+      return;
+    }
+
+    const confirmed = await showBulkDeleteConfirm(selectedTodos.length);
+    if (confirmed) {
+      removeMultipleTodos(selectedTodos);
+      showSuccessAlert(`${selectedTodos.length} tarefas foram deletadas!`);
+      setSelectionMode(false);
+      setSelectedTodos([]);
+    }
+  };
+
   const handleCompleteTodo = (id) => {
     completeTodos(id);
     const todo = todos.find(t => t.id === id);
@@ -42,16 +67,42 @@ const TarefasView = ({ todos, search, setSearch, removeTodo, completeTodos, addT
   return (
     <>
       {/* ===== SEARCH & INDICATORS ===== */}
-      <div className='flex items-center justify-center'>
-        <Search search={search} setSearch={setSearch}/>
-        <button onClick={handleAddTodo}>+</button>
+            <div className='flex items-center justify-between mb-4'>
+        <Search search={search} setSearch={setSearch} />
+        
+        {selectionMode ? (
+          <div className="flex items-center gap-2">
+            <button onClick={handleBulkDelete} className="btn-bulk-delete">
+              <i className="fas fa-trash-alt"></i> Excluir Selecionados ({selectedTodos.length})
+            </button>
+            <button onClick={() => { setSelectionMode(false); setSelectedTodos([]); }} className="btn-cancel-selection">
+              Cancelar
+            </button>
+          </div>
+        ) : (
+          <div className="flex items-center gap-2">
+            <button onClick={handleAddTodo} className="btn-add">+</button>
+            <button onClick={() => setSelectionMode(true)} className="btn-select">
+              Selecionar
+            </button>
+          </div>
+        )}
       </div>
 
       {/* ===== TODO LIST ===== */}
       <div className="todo-list">
         {todos.filter((todo) => todo.text.toLowerCase().includes(search.toLowerCase()))
         .map((todo) => (
-          <Todo key={todo.id} todo={todo} removeTodo={handleDeleteTodo} completeTodos={handleCompleteTodo} onEdit={handleEditTodo}/>
+          <Todo 
+            key={todo.id} 
+            todo={todo} 
+            removeTodo={handleDeleteTodo} 
+            completeTodos={handleCompleteTodo} 
+            onEdit={handleEditTodo}
+            selectionMode={selectionMode}
+            isSelected={selectedTodos.includes(todo.id)}
+            onToggleSelect={handleToggleSelect}
+          />
         ))}  
       </div>
     </>

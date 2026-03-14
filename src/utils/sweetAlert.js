@@ -90,6 +90,24 @@ export const showDeleteConfirm = async (taskText, taskCategory) => {
     width: '500px',
   });
 
+    return result.isConfirmed;
+};
+
+// Modal de confirmação de exclusão em massa
+export const showBulkDeleteConfirm = async (count) => {
+  const result = await Swal.fire({
+    title: `Excluir ${count} Tarefas?`,
+    text: "Esta ação não pode ser desfeita!",
+    icon: 'warning',
+    iconColor: '#dc3545',
+    showCancelButton: true,
+    confirmButtonText: '<i class="fas fa-trash"></i> Sim, excluir',
+    cancelButtonText: '<i class="fas fa-times"></i> Cancelar',
+    ...defaultConfig,
+    reverseButtons: true,
+    width: '500px',
+  });
+
   return result.isConfirmed;
 };
 
@@ -124,8 +142,7 @@ export const showTaskModal = async (editingTodo = null) => {
           >
             <option value="Pendente" ${isEditing && editingTodo.category === 'Pendente' ? 'selected' : ''}>🔴 Pendente</option>
             <option value="Progresso" ${isEditing && editingTodo.category === 'Progresso' ? 'selected' : ''}>🟡 Em Progresso</option>
-            <option value="Concluídas" ${isEditing && editingTodo.category === 'Concluídas' ? 'selected' : ''}>🟢 Concluída</option>
-          </select>
+            </select>
         </div>
       </div>
     `,
