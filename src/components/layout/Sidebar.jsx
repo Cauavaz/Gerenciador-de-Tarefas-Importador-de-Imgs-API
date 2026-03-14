@@ -2,15 +2,18 @@ import React from 'react';
 
 const Sidebar = ({ isMenuOpen, setIsMenuOpen, activeView, setActiveView }) => {
   return (
-    <aside className={`sidebar ${isMenuOpen ? 'open' : 'minimized'}`}>
+    <aside 
+      className={`sidebar ${isMenuOpen ? 'open' : 'minimized'}`}
+      onMouseEnter={() => !isMenuOpen && setIsMenuOpen(true)}
+      onMouseLeave={() => isMenuOpen && setIsMenuOpen(false)}
+    >
       <div className="sidebar-header">
         <div className="header-content">
-          {isMenuOpen && <span className="app-title">Projeto CoteFácil</span>}
-          {isMenuOpen && (
-            <button className="toggle-btn" onClick={() => setIsMenuOpen(false)}>
-              <i className="far fa-times-circle"></i>
-            </button>
-          )}
+          <img 
+            src="/img/logo.png" 
+            alt="Logo" 
+            className="sidebar-logo"
+          />
         </div>
       </div>
       <nav className="sidebar-nav">

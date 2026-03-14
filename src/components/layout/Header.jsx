@@ -1,12 +1,13 @@
 import React from 'react';
+import Logo from './Logo';
 
 const Header = ({ title = "Lista de Tarefas", isMenuOpen, setIsMenuOpen }) => {
   return (
     <header className={`app-header ${isMenuOpen ? '' : 'minimized'}`}>
       <div className="header-content">
-        <button className={`header-toggle-btn ${!isMenuOpen ? 'visible' : ''}`} onClick={() => setIsMenuOpen(true)}>
-          <i className="fas fa-bars"></i>
-        </button>
+        <div className="logo-trigger">
+          <Logo size="small" />
+        </div>
         <h1>{title}</h1>
       </div>
     </header>

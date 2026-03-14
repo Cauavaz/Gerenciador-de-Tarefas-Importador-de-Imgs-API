@@ -45,17 +45,31 @@ body {
 }
 
 .sidebar-header {
-  padding: 30px 24px;
+  padding: 0;
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   min-height: 80px;
 }
 
 .sidebar.minimized .sidebar-header {
-  padding: 30px 20px;
+  padding: 0;
   justify-content: center;
+}
+
+.sidebar-logo {
+  height: 70px;
+  width: 100%;
+  object-fit: contain;
+  opacity: 0;
+  animation: fadeIn 0.3s ease forwards;
+  transition: height 0.3s ease;
+}
+
+.sidebar.minimized .sidebar-logo {
+  height: 70px;
+  width: 100%;
 }
 
 .app-title {
@@ -344,6 +358,24 @@ body {
   gap: 16px;
   justify-content: flex-start;
   height: 100%;
+}
+
+.logo-trigger {
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+}
+
+.logo-trigger:hover {
+  transform: scale(1.1);
+}
+
+.logo-trigger svg {
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
 }
 
 .header-content h1 {
@@ -1342,6 +1374,158 @@ select option:hover {
   cursor: not-allowed;
 }
 
+/* ===== SWEETALERT2 CUSTOM STYLES ===== */
+.swal-rounded {
+  border-radius: 24px !important;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15) !important;
+  padding: 2rem !important;
+}
+
+.swal-toast-rounded {
+  border-radius: 16px !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15) !important;
+  padding: 1rem 1.5rem !important;
+}
+
+.swal-timer-bar {
+  background: rgba(26, 26, 46, 0.3) !important;
+  height: 4px !important;
+  border-radius: 2px !important;
+}
+
+.swal-btn-confirm,
+.swal-btn-cancel {
+  padding: 12px 28px !important;
+  border-radius: 12px !important;
+  font-weight: 600 !important;
+  font-size: 1rem !important;
+  transition: all 0.3s ease !important;
+  border: none !important;
+  cursor: pointer !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+}
+
+.swal-btn-confirm {
+  background: #1A1A2E !important;
+  color: white !important;
+  box-shadow: 0 4px 12px rgba(26, 26, 46, 0.3) !important;
+}
+
+.swal-btn-confirm:hover {
+  background: #0f0f1a !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 6px 16px rgba(26, 26, 46, 0.4) !important;
+}
+
+.swal-btn-cancel {
+  background: #e9ecef !important;
+  color: #495057 !important;
+}
+
+.swal-btn-cancel:hover {
+  background: #dee2e6 !important;
+  transform: translateY(-2px) !important;
+}
+
+.swal2-icon {
+  border-width: 3px !important;
+  width: 80px !important;
+  height: 80px !important;
+  margin: 1.5rem auto 1rem !important;
+}
+
+.swal2-icon.swal2-success {
+  border-color: #28a745 !important;
+}
+
+.swal2-icon.swal2-success [class^='swal2-success-line'] {
+  background-color: #28a745 !important;
+}
+
+.swal2-icon.swal2-success .swal2-success-ring {
+  border-color: rgba(40, 167, 69, 0.3) !important;
+}
+
+.swal2-icon.swal2-warning {
+  border-color: #dc3545 !important;
+  color: #dc3545 !important;
+}
+
+.swal2-title {
+  font-size: 1.75rem !important;
+  font-weight: 700 !important;
+  color: #1A1A2E !important;
+  padding: 0 !important;
+  margin-bottom: 1.5rem !important;
+}
+
+.swal2-html-container {
+  margin: 0 !important;
+  padding: 0 !important;
+  font-size: 1rem !important;
+  color: #495057 !important;
+}
+
+.swal2-validation-message {
+  background: #fff3cd !important;
+  color: #856404 !important;
+  border-radius: 12px !important;
+  padding: 12px 16px !important;
+  margin-top: 12px !important;
+  border-left: 4px solid #ffc107 !important;
+}
+
+.swal2-actions {
+  margin-top: 2rem !important;
+  gap: 12px !important;
+}
+
+/* Toast específico */
+.swal2-toast .swal2-title {
+  font-size: 1rem !important;
+  margin: 0 !important;
+  font-weight: 600 !important;
+}
+
+.swal2-toast .swal2-icon {
+  width: 32px !important;
+  height: 32px !important;
+  margin: 0 !important;
+}
+
+/* Animações suaves */
+.swal2-show {
+  animation: swal2-show 0.3s ease !important;
+}
+
+.swal2-hide {
+  animation: swal2-hide 0.2s ease !important;
+}
+
+@keyframes swal2-show {
+  0% {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes swal2-hide {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+}
+
 /* ===== MODAL STYLES ===== */
 .modal-overlay {
   position: fixed;
@@ -1354,56 +1538,107 @@ select option:hover {
   align-items: center;
   justify-content: center;
   z-index: 2000;
-  animation: fadeIn 0.3s ease;
 }
 
 .modal-content {
   background: white;
-  border-radius: 16px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-  padding: 32px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 0;
   max-width: 500px;
   width: 90%;
   position: relative;
-  animation: slideUp 0.3s ease;
 }
 
 .modal-close {
   position: absolute;
-  top: 16px;
-  right: 16px;
+  top: 12px;
+  right: 12px;
   background: transparent;
   border: none;
   font-size: 24px;
   cursor: pointer;
-  color: #999;
-  padding: 0;
+  color: #666;
+  padding: 4px;
   width: 32px;
   height: 32px;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.2s ease;
+  transition: color 0.2s;
   margin: 0;
+  z-index: 10;
 }
 
 .modal-close:hover {
-  color: #E94560;
-  transform: scale(1.1);
+  color: #333;
 }
 
 .modal-content .todo-form {
   margin: 0;
-  margin-top: 16px;
+  padding: 2rem;
   box-shadow: none;
   border: none;
-  padding: 0;
   background: transparent;
 }
 
 .modal-content .todo-form h2 {
-  margin-top: 0;
-  color: #2d4a2d;
+  margin: 0 0 1.5rem 0;
+  color: #333;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.modal-content .input-group {
+  margin-bottom: 1.25rem;
+}
+
+.modal-content .input-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #555;
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.modal-content input,
+.modal-content select {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+  transition: border-color 0.2s;
+  background: white;
+  color: #333;
+}
+
+.modal-content input:focus,
+.modal-content select:focus {
+  outline: none;
+  border-color: #1A1A2E;
+}
+
+.modal-content select {
+  cursor: pointer;
+}
+
+.modal-content button[type="submit"] {
+  width: 100%;
+  padding: 0.75rem 1.5rem;
+  background: #1A1A2E;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+  margin-top: 0.5rem;
+}
+
+.modal-content button[type="submit"]:hover {
+  background: #0f0f1a;
 }
 
 @keyframes fadeIn {
@@ -1413,104 +1648,6 @@ select option:hover {
   to {
     opacity: 1;
   }
-}
-
-@keyframes slideUp {
-  from {
-    transform: translateY(20px);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
-/* ===== DELETE MODAL STYLES ===== */
-.delete-modal {
-  max-width: 400px;
-  text-align: center;
-}
-
-.delete-modal-header {
-  margin-bottom: 24px;
-}
-
-.delete-modal-header i {
-  font-size: 3em;
-  color: #ff6b6b;
-  margin-bottom: 16px;
-  display: block;
-}
-
-.delete-modal-header h3 {
-  color: #2d4a2d;
-  margin: 0;
-  font-size: 1.5em;
-}
-
-.delete-modal-body {
-  margin-bottom: 32px;
-}
-
-.delete-modal-body p {
-  color: #666;
-  margin-bottom: 12px;
-  font-size: 1em;
-}
-
-.delete-todo-text {
-  font-weight: 600;
-  color: #2d4a2d !important;
-  font-size: 1.1em !important;
-  background: #f8f9fa;
-  padding: 12px;
-  border-radius: 8px;
-  margin: 16px 0 !important;
-}
-
-.delete-todo-category {
-  color: #888 !important;
-  font-size: 0.9em !important;
-  font-style: italic;
-}
-
-.delete-modal-actions {
-  display: flex;
-  gap: 12px;
-  justify-content: center;
-}
-
-.btn-cancel, .btn-delete {
-  padding: 12px 24px;
-  border: none;
-  border-radius: 8px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin: 0;
-}
-
-.btn-cancel {
-  background: #e8e8e8;
-  color: #666;
-}
-
-.btn-cancel:hover {
-  background: #d8d8d8;
-  color: #444;
-}
-
-.btn-delete {
-  background: #dc2626;
-  color: white;
-}
-
-.btn-delete:hover {
-  background: #b91c1c;
 }
 
 /* ===== ANIMAÇÃO DO POPUP ===== */

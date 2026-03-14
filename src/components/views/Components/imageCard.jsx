@@ -91,19 +91,68 @@ const ImageCard = ({image, onDelete, images}) => {
           {/* Close button */}
           <button
             onClick={handleClose}
-            className="absolute top-2 right-2 sm:top-4 sm:right-4 z-10 w-8 h-8 sm:w-10 sm:h-10 bg-gray-200 rounded-full flex items-center justify-center hover:bg-gray-300 transition-colors shadow-lg"
+            style={{
+              position: 'absolute',
+              top: '16px',
+              right: '16px',
+              zIndex: 30,
+              width: '48px',
+              height: '48px',
+              background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+              border: '2px solid white',
+              borderRadius: '50%',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              cursor: 'pointer',
+              transition: 'all 0.3s ease',
+              boxShadow: '0 4px 15px rgba(102, 126, 234, 0.4)',
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = 'rotate(90deg) scale(1.1)';
+              e.currentTarget.style.boxShadow = '0 6px 20px rgba(102, 126, 234, 0.6)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = 'rotate(0deg) scale(1)';
+              e.currentTarget.style.boxShadow = '0 4px 15px rgba(102, 126, 234, 0.4)';
+            }}
+            title="Fechar"
           >
-            <X className="w-5 h-5 sm:w-6 sm:h-6 text-gray-700" />
+            <X style={{ width: '24px', height: '24px', color: 'white' }} />
           </button>
 
           {/* Delete button - Only for custom uploaded images */}
           {currentImage.id && typeof currentImage.id === 'string' && currentImage.id.startsWith('custom_') && (
             <button
               onClick={() => onDelete(currentImage.id)}
-              className="absolute top-2 left-2 sm:top-4 sm:left-4 z-10 w-8 h-8 sm:w-10 sm:h-10 bg-red-200 rounded-full flex items-center justify-center hover:bg-red-300 transition-colors shadow-lg"
+              style={{
+                position: 'absolute',
+                top: '16px',
+                left: '16px',
+                zIndex: 30,
+                width: '48px',
+                height: '48px',
+                background: 'linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%)',
+                border: '2px solid white',
+                borderRadius: '50%',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                cursor: 'pointer',
+                transition: 'all 0.3s ease',
+                boxShadow: '0 4px 15px rgba(255, 107, 107, 0.4)',
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'scale(1.1)';
+                e.currentTarget.style.boxShadow = '0 6px 20px rgba(255, 107, 107, 0.6)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'scale(1)';
+                e.currentTarget.style.boxShadow = '0 4px 15px rgba(255, 107, 107, 0.4)';
+              }}
               title="Deletar imagem"
             >
-              <Trash2 className="w-5 h-5 sm:w-6 sm:h-6 text-red-700" />
+              <Trash2 style={{ width: '22px', height: '22px', color: 'white' }} />
             </button>
           )}
 
@@ -191,15 +240,83 @@ const ImageCard = ({image, onDelete, images}) => {
           </div>
 
           {/* Info footer */}
-          <div className="px-4 py-4 sm:px-6 sm:py-5 md:px-8 md:py-6 bg-gray-50 border-t border-gray-200">
-            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4">
-              <div className="min-w-0">
-                <p id="image-modal-title" className="font-semibold text-gray-900 text-sm sm:text-base truncate">{currentImage.photographer}</p>
-                <p id="image-modal-description" className="text-xs sm:text-sm text-gray-600 truncate">{currentImage.alt || 'Imagem'}</p>
+          <div style={{
+            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+            padding: '24px 32px',
+            borderTop: 'none',
+          }}>
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+              <div className="flex items-center gap-4 flex-1 min-w-0">
+                <div style={{
+                  width: '56px',
+                  height: '56px',
+                  background: 'linear-gradient(135deg, #ffd89b 0%, #19547b 100%)',
+                  borderRadius: '50%',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  color: 'white',
+                  fontSize: '24px',
+                  fontWeight: 'bold',
+                  boxShadow: '0 4px 12px rgba(0, 0, 0, 0.2)',
+                  border: '3px solid white',
+                  flexShrink: 0,
+                }}>
+                  {currentImage.photographer?.charAt(0).toUpperCase() || '?'}
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p style={{
+                    color: 'white',
+                    fontSize: '1.25rem',
+                    fontWeight: '700',
+                    margin: '0 0 6px 0',
+                    textShadow: '0 2px 4px rgba(0, 0, 0, 0.2)',
+                  }}>
+                    {currentImage.photographer}
+                  </p>
+                  <p style={{
+                    color: 'rgba(255, 255, 255, 0.9)',
+                    fontSize: '0.95rem',
+                    margin: 0,
+                    fontWeight: '400',
+                  }}>
+                    {currentImage.alt || 'Imagem sem descrição'}
+                  </p>
+                </div>
               </div>
               {images && images.length > 1 && (
-                <div className="text-xs sm:text-sm text-gray-600 whitespace-nowrap bg-gray-100 px-3 py-1 rounded-full">
-                  {currentIndex + 1} / {images.length}
+                <div style={{
+                  background: 'rgba(255, 255, 255, 0.25)',
+                  backdropFilter: 'blur(10px)',
+                  padding: '12px 20px',
+                  borderRadius: '50px',
+                  border: '2px solid rgba(255, 255, 255, 0.3)',
+                  boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  flexShrink: 0,
+                }}>
+                  <span style={{
+                    color: 'white',
+                    fontSize: '1.1rem',
+                    fontWeight: '700',
+                  }}>
+                    {currentIndex + 1}
+                  </span>
+                  <span style={{
+                    color: 'rgba(255, 255, 255, 0.7)',
+                    fontSize: '1rem',
+                  }}>
+                    /
+                  </span>
+                  <span style={{
+                    color: 'rgba(255, 255, 255, 0.9)',
+                    fontSize: '1rem',
+                    fontWeight: '500',
+                  }}>
+                    {images.length}
+                  </span>
                 </div>
               )}
             </div>
@@ -220,13 +337,13 @@ const ModalContent = ({ children, ...props }) => (
       gap: '0',
       overflow: 'hidden',
       backgroundColor: '#fff',
-      borderRadius: '8px',
-      border: '1px solid #e5eaf2',
-      boxShadow: '0 4px 12px rgb(0 0 0 / 0.2)',
-      width: '900px',
-      maxWidth: '90vw',
-      height: '700px',
-      maxHeight: '90vh',
+      borderRadius: '20px',
+      border: 'none',
+      boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
+      width: '95vw',
+      maxWidth: '1100px',
+      height: '90vh',
+      maxHeight: '800px',
     }}
   >
     {children}
