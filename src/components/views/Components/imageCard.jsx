@@ -349,5 +349,4 @@ const ModalContent = ({ children, ...props }) => (
     {children}
   </div>
 );
-
 export default ImageCard;
